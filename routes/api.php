@@ -12,7 +12,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/products', [ProductController::class, 'publicIndex']);
 Route::get('/products/{product}', [ProductController::class, 'publicShow']);
-
+Route::get('/deals', [ProductController::class, 'publicDeals']);
 // Must be logged in (any role)
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     ]));
     Route::get('/orders', [OrderController::class, 'index']);
     Route::post('/orders', [OrderController::class, 'store']);
+    Route::patch('/orders/{order}/cancel', [OrderController::class, 'cancel']);
 
     // Admin only
     Route::middleware('admin')->prefix('admin')->group(function () {

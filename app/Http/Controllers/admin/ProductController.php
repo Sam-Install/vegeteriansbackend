@@ -46,6 +46,7 @@ class ProductController extends Controller
             'stock'       => $request->stock,
             'description' => $request->description,
             'status'      => $request->status ?? 'active',
+            'is_deal' => $request->boolean('is_deal'),
             'images'      => $this->storeImages($request),
         ]);
 
@@ -85,6 +86,7 @@ class ProductController extends Controller
             'stock'       => $request->stock,
             'description' => $request->description,
             'status'      => $request->status ?? $product->status,
+            'is_deal' => $request->boolean('is_deal'),
             'images'      => $images,
         ]);
 
@@ -100,6 +102,18 @@ class ProductController extends Controller
 
         return response()->json(['message' => 'Product deleted']);
     }
+
+    // Public: today's deals — active products marked as a deal
+public function publicDeals()
+{
+    return response()->json(
+        Product::where('status', 'active')
+            ->where('is_deal', true)
+            ->latest()
+            ->take(12)
+            ->get()
+    );
+}
 
     // Public: storefront reads active products only (no auth required)
     public function publicIndex(Request $request)

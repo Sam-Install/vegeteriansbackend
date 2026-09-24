@@ -8,7 +8,7 @@ class Product extends Model
 {
     protected $fillable = [
         'name', 'category', 'unit', 'old_price', 'new_price',
-        'stock', 'description', 'images', 'status',
+        'stock', 'description', 'images', 'status', 'is_deal',
     ];
 
     protected $appends = ['image_urls'];
@@ -19,6 +19,7 @@ class Product extends Model
             'images'    => 'array',
             'old_price' => 'decimal:2',
             'new_price' => 'decimal:2',
+            'is_deal' => 'boolean',
         ];
     }
 
